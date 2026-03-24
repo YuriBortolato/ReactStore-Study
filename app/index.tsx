@@ -21,11 +21,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.cartHeader}>
-        <Text style={styles.cartText}>🛒 Itens no carrinho: {qtdItens}</Text>
-        <Text style={styles.cartText}>Total: R$ {total.toFixed(2)}</Text>
-      </View>
-
+      {/* Lista de produtos vem primeiro */}
       <FlatList
         data={produtos}
         keyExtractor={(item) => item.id}
@@ -37,7 +33,13 @@ export default function Home() {
             </TouchableOpacity>
           </Link>
         )}
+        contentContainerStyle={{ paddingBottom: 80 }}
       />
+
+      <View style={styles.cartHeader}>
+        <Text style={styles.cartText}>🛒 Itens: {qtdItens}</Text>
+        <Text style={styles.cartText}>Total: R$ {total.toFixed(2)}</Text>
+      </View>
     </View>
   );
 }
@@ -48,7 +50,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#333",
     padding: 16,
     borderRadius: 8,
-    marginBottom: 16,
+    position: "absolute",
+    bottom: 20,
+    left: 16,
+    right: 16,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    elevation: 5,
   },
   cartText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
   card: {
