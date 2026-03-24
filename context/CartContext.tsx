@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 type Produto = { id: string; nome: string; preco: number };
 type CartItem = { produto: Produto; quantidade: number };
@@ -8,20 +14,24 @@ type CartContextType = {
   total: number;
 };
 
-export const CartContext = createContext<CartContextType | undefined>(undefined);
+export const CartContext = createContext<CartContextType | undefined>(
+  undefined,
+);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   const addToCart = useCallback((produto: Produto) => {
     setCart((prevCart) => {
-      const itemExistente = prevCart.find((item) => item.produto.id === produto.id);
-      
+      const itemExistente = prevCart.find(
+        (item) => item.produto.id === produto.id,
+      );
+
       if (itemExistente) {
         return prevCart.map((item) =>
           item.produto.id === produto.id
             ? { ...item, quantidade: item.quantidade + 1 }
-            : item
+            : item,
         );
       }
       return [...prevCart, { produto, quantidade: 1 }];
@@ -29,7 +39,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const total = useMemo(() => {
-    return cart.reduce((acc, item) => acc + item.produto.preco * item.quantidade, 0);
+    return cart.reduce(
+      (acc, item) => acc + item.produto.preco * item.quantidade,
+      0,
+    );
   }, [cart]);
 
   return (
